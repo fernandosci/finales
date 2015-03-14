@@ -69,6 +69,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void onDebugClick(View view) {
 
+        serviceHandler.serviceInteract();
+
 //        serviceHandler.serviceInteract();
 //
 //        //permanently starts the service in its own thread
