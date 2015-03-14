@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="time_afeterboot" format="float" type="dimen">0.2</item>
+    <item name="time_service_betweencallst" format="float" type="dimen">0.1</item>
+
+</resources>
