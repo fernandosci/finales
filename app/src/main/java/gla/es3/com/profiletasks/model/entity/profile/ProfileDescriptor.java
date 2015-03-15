@@ -9,6 +9,7 @@ import gla.es3.com.profiletasks.model.entity.Entity;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskDescriptor;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.entity.triggers.TriggerDescriptor;
+import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
 
 /**
  * Created by ito on 14/03/2015.
@@ -29,23 +30,49 @@ public class ProfileDescriptor implements Entity, Serializable {
         this.taskDescriptors = new ArrayList<>();
     }
 
+    private void registerAll(TriggerServiceHandler sHandler) {
+        synchronized (triggerDescriptors) {
+            for (TriggerDescriptor td : triggerDescriptors) {
+                td.register(sHandler);
+            }
+        }
+    }
+
+    private void unregisterAll(TriggerServiceHandler sHandler) {
+        synchronized (triggerDescriptors) {
+            for (TriggerDescriptor td : triggerDescriptors) {
+                td.unregister(sHandler);
+            }
+        }
+    }
+
+
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled, TriggerServiceHandler sHandler) {
         this.enabled = enabled;
-    }
-
-    public void addTriggerDescriptor(TriggerDescriptor id) {
-        synchronized (triggerDescriptors) {
-            triggerDescriptors.add(id);
+        if (enabled) {
+            registerAll(sHandler);
+        } else {
+            unregisterAll(sHandler);
         }
     }
 
-    public void removeTriggerDescriptor(TriggerDescriptor id) {
+    public void addTriggerDescriptor(TriggerDescriptor id, TriggerServiceHandler sHandler) {
+        synchronized (triggerDescriptors) {
+            triggerDescriptors.add(id);
+            if (enabled) {
+                id.register(sHandler);
+            }
+        }
+    }
+
+    public void removeTriggerDescriptor(TriggerDescriptor id, TriggerServiceHandler sHandler) {
         synchronized (triggerDescriptors) {
             triggerDescriptors.remove(id);
+            id.unregister(sHandler);
         }
     }
 
@@ -88,11 +115,27 @@ public class ProfileDescriptor implements Entity, Serializable {
     }
 
     public void execute(TaskServiceHandler tHandler) {
+        if (!isEnabled())
+            return;
 
         synchronized (taskDescriptors) {
             for (TaskDescriptor td : taskDescriptors) {
                 td.run(tHandler);
             }
+        }
+    }
+
+    public void check(TriggerServiceHandler sHandler) {
+        if (!isEnabled())
+            return;
+
+        List<TriggerDescriptor> copyTriggers;
+
+        synchronized (triggerDescriptors) {
+            copyTriggers = new ArrayList<>(triggerDescriptors);
+        }
+        for (TriggerDescriptor td : copyTriggers) {
+            td.check(sHandler);
         }
     }
 }

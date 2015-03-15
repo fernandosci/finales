@@ -12,19 +12,19 @@ public class TaskDescriptor implements Serializable {
     String id;
     ParameterContainer container;
 
-    public TaskDescriptor(String taskID) {
+    public TaskDescriptor(String taskID, TaskServiceHandler tHandler) {
         this.id = taskID;
-        this.container = TaskProvider.getTask(id).getParameters();
+        this.container = tHandler.getTaskProvider().getTask(id).getParameters();
     }
 
 
     public String getID() {
-        return TaskProvider.getTask(id).getID();
+        return id;
     }
 
 
-    public String getDisplayName() {
-        return TaskProvider.getTask(id).getDisplayName();
+    public String getDisplayName(TaskServiceHandler tHandler) {
+        return tHandler.getTaskProvider().getTask(id).getDisplayName();
     }
 
 
@@ -33,12 +33,12 @@ public class TaskDescriptor implements Serializable {
     }
 
 
-    public String getCustomName() {
-        return TaskProvider.getTask(id).getCustomName(container);
+    public String getCustomName(TaskServiceHandler tHandler) {
+        return tHandler.getTaskProvider().getTask(id).getCustomName(container);
     }
 
 
     public void run(TaskServiceHandler tHandler) {
-        TaskProvider.getTask(id).run(tHandler, container);
+        tHandler.getTaskProvider().getTask(id).run(tHandler, container);
     }
 }

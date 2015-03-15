@@ -3,6 +3,8 @@ package gla.es3.com.profiletasks.model;
 import java.util.List;
 
 import gla.es3.com.profiletasks.model.entity.profile.ProfileDescriptor;
+import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
+import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
 
 /**
  * Created by ito on 14/03/2015.
@@ -17,4 +19,7 @@ public interface ModelContainer {
 
     public ProfileDescriptor getProfile(String id);
 
+    public TriggerServiceHandler getTriggerServiceHandler();
+
+    public TaskServiceHandler getTaskServiceHandler();
 }

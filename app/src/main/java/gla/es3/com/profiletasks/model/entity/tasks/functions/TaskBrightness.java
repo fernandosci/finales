@@ -3,7 +3,6 @@ package gla.es3.com.profiletasks.model.entity.tasks.functions;
 import android.provider.Settings;
 
 import gla.es3.com.profiletasks.model.entity.tasks.Task;
-import gla.es3.com.profiletasks.model.entity.tasks.TaskProvider;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
@@ -13,10 +12,6 @@ import gla.es3.com.profiletasks.model.parameter.types.RangeIntType;
  * Created by ito on 14/03/2015.
  */
 public class TaskBrightness implements Task {
-
-    static {
-        TaskProvider.registerTask(new TaskBrightness());
-    }
 
     @Override
     public String getID() {

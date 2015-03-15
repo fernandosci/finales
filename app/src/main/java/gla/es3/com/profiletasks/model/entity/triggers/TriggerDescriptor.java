@@ -2,8 +2,6 @@ package gla.es3.com.profiletasks.model.entity.triggers;
 
 import java.io.Serializable;
 
-import gla.es3.com.profiletasks.model.entity.tasks.TaskProvider;
-import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 
 /**
@@ -11,36 +9,41 @@ import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
  */
 public class TriggerDescriptor implements Serializable {
 
-    String id;
-    ParameterContainer container;
+    private String profileID;
+    private String id;
+    private ParameterContainer container;
 
-    public TriggerDescriptor(String triggerID) {
+    public TriggerDescriptor(String profileID, String triggerID, TriggerServiceHandler tHandler) {
+        this.profileID = profileID;
         this.id = triggerID;
-        this.container = TaskProvider.getTask(id).getParameters();
+        this.container = tHandler.getTriggerProvider().getTrigger(id).getParameters();
     }
 
-
-    public String getID() {
-        return TaskProvider.getTask(id).getID();
+    public String getID(TriggerServiceHandler tHandler) {
+        return id;
     }
 
-
-    public String getDisplayName() {
-        return TaskProvider.getTask(id).getDisplayName();
+    public String getDisplayName(TriggerServiceHandler tHandler) {
+        return tHandler.getTriggerProvider().getTrigger(id).getDisplayName();
     }
-
 
     public ParameterContainer getParameters() {
         return container;
     }
 
-
-    public String getCustomName() {
-        return TaskProvider.getTask(id).getCustomName(container);
+    public String getCustomName(TriggerServiceHandler tHandler) {
+        return tHandler.getTriggerProvider().getTrigger(id).getCustomName(container);
     }
 
+    public void check(TriggerServiceHandler tHandler) {
+        tHandler.getTriggerProvider().getTrigger(id).check(container, profileID);
+    }
 
-    public void run(TaskServiceHandler tHandler) {
-        TaskProvider.getTask(id).run(tHandler, container);
+    public void register(TriggerServiceHandler tHandler) {
+        tHandler.getTriggerProvider().getTrigger(id).register(container, profileID);
+    }
+
+    public void unregister(TriggerServiceHandler tHandler) {
+        tHandler.getTriggerProvider().getTrigger(id).unregister(profileID);
     }
 }

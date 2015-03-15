@@ -1,26 +1,29 @@
 package gla.es3.com.profiletasks.model.entity.triggers.functions;
 
-import gla.es3.com.profiletasks.model.ModelContainer;
-import gla.es3.com.profiletasks.model.entity.triggers.Trigger;
-import gla.es3.com.profiletasks.model.entity.triggers.TriggerProvider;
-import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
+import gla.es3.com.profiletasks.model.entity.EntityServiceHandler;
+import gla.es3.com.profiletasks.model.entity.triggers.BaseTrigger;
+import gla.es3.com.profiletasks.model.entity.triggers.TriggerListener;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
 /**
  * Created by ito on 14/03/2015.
  */
-public class TriggerWifiName implements Trigger {
+public class TriggerWifiName extends BaseTrigger {
 
-    static {
-        TriggerProvider.registerTrigger(new TriggerWifiName());
+    public TriggerWifiName(TriggerListener listener, EntityServiceHandler eHandler) {
+        super(listener, eHandler);
+    }
+
+    @Override
+    public String getID() {
+        return "TRIGGER_STATE_WIFINAME";
     }
 
     @Override
     public String getDisplayName() {
         return " Wifi Name";
     }
-
 
     @Override
     public ParameterContainer getParameters() {
@@ -39,19 +42,8 @@ public class TriggerWifiName implements Trigger {
     }
 
     @Override
-    public void check(TriggerServiceHandler tHandler, ParameterContainer list) {
+    public void check(ParameterContainer list, String profileId) {
 
+        //listener.notificationOfEvent(profileId);
     }
-
-    @Override
-    public void register(ModelContainer modelcontainer, TriggerServiceHandler tHandler, ParameterContainer list) {
-
-    }
-
-    @Override
-    public String getID() {
-        return null;
-    }
-
-
 }

@@ -3,34 +3,37 @@ package gla.es3.com.profiletasks.model.entity.tasks;
 import java.util.HashMap;
 import java.util.Set;
 
+import gla.es3.com.profiletasks.model.entity.tasks.functions.TaskBrightness;
+import gla.es3.com.profiletasks.model.entity.tasks.functions.TaskToast;
+
 /**
  * Created by ito on 14/03/2015.
  */
 public class TaskProvider {
 
-    private static HashMap<String, Task> taskMap = null;
-    private static boolean initialized = false;
+    private HashMap<String, Task> taskMap = null;
 
-    public static void registerTask(Task t) {
-        if (!initialized)
-            initializeTasks();
 
+    public TaskProvider() {
+        taskMap = new HashMap<>();
+        initializeTasks();
+    }
+
+    private void initializeTasks() {
+        registerTask(new TaskBrightness());
+        registerTask(new TaskToast());
+    }
+
+    public void registerTask(Task t) {
         taskMap.put(t.getID(), t);
     }
 
-
-    public static void initializeTasks() {
-        if (!initialized)
-            taskMap = new HashMap<>();
-        initialized = true;
-    }
-
-    public static Set<String> getTaskList() {
+    public Set<String> getTaskList() {
         return taskMap.keySet();
     }
 
 
-    public static Task getTask(String id) {
+    public Task getTask(String id) {
         return taskMap.get(id);
     }
 
