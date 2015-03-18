@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class ParameterContainer implements Serializable {
 
     private String id;
@@ -19,7 +17,7 @@ public class ParameterContainer implements Serializable {
 
     public ParameterContainer(ParameterContainer other) {
         this.id = other.id;
-        this.list = other.list;
+        this.list = new ArrayList<>(other.list);
     }
 
 

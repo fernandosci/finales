@@ -1,21 +1,21 @@
 package gla.es3.com.profiletasks.model.entity.tasks;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 import gla.es3.com.profiletasks.model.entity.tasks.functions.TaskBrightness;
 import gla.es3.com.profiletasks.model.entity.tasks.functions.TaskToast;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class TaskProvider {
 
-    private HashMap<String, Task> taskMap = null;
+    private LinkedHashMap<String, Task> taskMap = null;
 
 
     public TaskProvider() {
-        taskMap = new HashMap<>();
+        taskMap = new LinkedHashMap<>();
         initializeTasks();
     }
 
@@ -32,6 +32,9 @@ public class TaskProvider {
         return taskMap.keySet();
     }
 
+    public List<String> getTaskListByOrder() {
+        return new ArrayList<>(taskMap.keySet());
+    }
 
     public Task getTask(String id) {
         return taskMap.get(id);

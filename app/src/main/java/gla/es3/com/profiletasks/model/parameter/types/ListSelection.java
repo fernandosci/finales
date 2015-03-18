@@ -1,17 +1,22 @@
 package gla.es3.com.profiletasks.model.parameter.types;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
-/**
- * Created by ito on 15/03/2015.
- */
-public interface ListSelection {
+
+public interface ListSelection extends Serializable {
 
     public String[] getDisplayNames();
 
-    public List<Integer> getSelectedIndex();
+    public Set<Integer> getSelectedIndexes();
 
-    public void setSelectedIndexes(List<Integer> selectedIndexes);
+    public void setSelectedIndexes(Set<Integer> selectedIndexes);
+
+    public String getDisplayName(int i);
+
+    public void addSelectedIndex(Set<Integer> selectedIndexes);
+
+    public void addSelectedIndex(Integer selectedIndex);
 
     public void setNoSelection();
 

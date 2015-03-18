@@ -19,9 +19,7 @@ import gla.es3.com.profiletasks.model.entity.triggers.TriggerProvider;
 import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
 import gla.es3.com.profiletasks.service.MainServiceModelHandler;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class ModelContainerImpl implements ModelContainer, Serializable {
 
     private static final String FILENAME = "model.bin";
@@ -56,7 +54,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
             is.close();
             fis.close();
         } catch (Exception e) {
-            list = new ArrayList<>();
+            list = new ArrayList<ProfileDescriptor>();
         }
         return list;
     }
@@ -95,7 +93,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
         List<ProfileDescriptor> profileCopy;
 
         synchronized (profiles) {
-            profileCopy = new ArrayList<>(profiles);
+            profileCopy = new ArrayList<ProfileDescriptor>(profiles);
         }
 
         for (ProfileDescriptor pdesc : profileCopy) {
@@ -143,7 +141,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
         ProfileDescriptor pf = null;
         synchronized (profiles) {
             for (ProfileDescriptor pdesc : profiles) {
-                if (pdesc.equals(id)) {
+                if (pdesc.getID().equals(id)) {
                     pf = pdesc;
                     break;
                 }
@@ -167,7 +165,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
 
         synchronized (profiles) {
             for (ProfileDescriptor pdesc : profiles) {
-                if (pdesc.equals(profileID)) {
+                if (pdesc.getID().equals(profileID)) {
                     pf = pdesc;
                     break;
                 }

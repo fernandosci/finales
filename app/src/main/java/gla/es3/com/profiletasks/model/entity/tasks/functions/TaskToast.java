@@ -7,9 +7,7 @@ import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class TaskToast implements Task {
 
     @Override
@@ -19,13 +17,13 @@ public class TaskToast implements Task {
 
     @Override
     public String getDisplayName() {
-        return "Toast Message";
+        return "Toast";
     }
 
     @Override
     public ParameterContainer getParameters() {
         ParameterFactory f = new ParameterFactory(getID());
-        f.addParameter(String.class, "", "Message");
+        f.addParameter(String.class, "Hello World!", "Toast", "Toast Message");
 
         return f.getContainer();
     }

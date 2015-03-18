@@ -2,9 +2,7 @@ package gla.es3.com.profiletasks.model.parameter.types;
 
 import java.io.Serializable;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class RangeIntType implements Serializable {
     private int min;
     private int max;

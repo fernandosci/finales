@@ -11,9 +11,6 @@ import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.entity.triggers.TriggerDescriptor;
 import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
 
-/**
- * Created by ito on 14/03/2015.
- */
 public class ProfileDescriptor implements Entity, Serializable {
 
     private final List<TriggerDescriptor> triggerDescriptors;
@@ -26,8 +23,8 @@ public class ProfileDescriptor implements Entity, Serializable {
         id = UUID.randomUUID();
         this.name = name;
         this.enabled = true;
-        this.triggerDescriptors = new ArrayList<>();
-        this.taskDescriptors = new ArrayList<>();
+        this.triggerDescriptors = new ArrayList<TriggerDescriptor>();
+        this.taskDescriptors = new ArrayList<TaskDescriptor>();
     }
 
     private void registerAll(TriggerServiceHandler sHandler) {
@@ -79,7 +76,7 @@ public class ProfileDescriptor implements Entity, Serializable {
     public List<TriggerDescriptor> getTriggerDescriptorsList() {
         ArrayList<TriggerDescriptor> triggerDescriptors1;
         synchronized (triggerDescriptors) {
-            triggerDescriptors1 = new ArrayList<>(triggerDescriptors);
+            triggerDescriptors1 = new ArrayList<TriggerDescriptor>(triggerDescriptors);
         }
         return triggerDescriptors1;
     }
@@ -90,7 +87,7 @@ public class ProfileDescriptor implements Entity, Serializable {
         }
     }
 
-    public void removeTaskDescriptor(TriggerDescriptor id) {
+    public void removeTaskDescriptor(TaskDescriptor id) {
         synchronized (taskDescriptors) {
             taskDescriptors.remove(id);
         }
@@ -99,7 +96,7 @@ public class ProfileDescriptor implements Entity, Serializable {
     public List<TaskDescriptor> getTTaskDescriptorsList() {
         ArrayList<TaskDescriptor> taskDescriptors1;
         synchronized (taskDescriptors) {
-            taskDescriptors1 = new ArrayList<>(taskDescriptors);
+            taskDescriptors1 = new ArrayList<TaskDescriptor>(taskDescriptors);
         }
         return taskDescriptors1;
     }
@@ -132,7 +129,7 @@ public class ProfileDescriptor implements Entity, Serializable {
         List<TriggerDescriptor> copyTriggers;
 
         synchronized (triggerDescriptors) {
-            copyTriggers = new ArrayList<>(triggerDescriptors);
+            copyTriggers = new ArrayList<TriggerDescriptor>(triggerDescriptors);
         }
         for (TriggerDescriptor td : copyTriggers) {
             td.check(sHandler);

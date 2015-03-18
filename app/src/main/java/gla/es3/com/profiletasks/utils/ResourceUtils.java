@@ -3,9 +3,7 @@ package gla.es3.com.profiletasks.utils;
 import android.content.Context;
 import android.util.TypedValue;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class ResourceUtils {
 
     public static float getMSFromResouce(Context context, int resourceID) {

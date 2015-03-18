@@ -6,9 +6,7 @@ import gla.es3.com.profiletasks.model.entity.triggers.TriggerListener;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class TriggerWifiName extends BaseTrigger {
 
     public TriggerWifiName(TriggerListener listener, EntityServiceHandler eHandler) {
@@ -28,7 +26,7 @@ public class TriggerWifiName extends BaseTrigger {
     @Override
     public ParameterContainer getParameters() {
         ParameterFactory f = new ParameterFactory(getID());
-        f.addParameter(String.class, "", "Wifi Name");
+        f.addParameter(String.class, "", "Wifi Name", "Wifi Name");
         return f.getContainer();
     }
 
@@ -38,12 +36,16 @@ public class TriggerWifiName extends BaseTrigger {
             return getDisplayName() + "(" + (String) list.getList().get(0).getValue() + ")";
         } else
             return "";
-
     }
 
     @Override
     public void check(ParameterContainer list, String profileId) {
 
         //listener.notificationOfEvent(profileId);
+    }
+
+    @Override
+    public void updatedParameters(ParameterContainer list, String profileId) {
+
     }
 }

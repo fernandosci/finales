@@ -6,9 +6,7 @@ import gla.es3.com.profiletasks.model.entity.profile.ProfileDescriptor;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.entity.triggers.TriggerServiceHandler;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public interface ModelContainer {
 
     public List<ProfileDescriptor> getList();

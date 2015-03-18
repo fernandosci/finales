@@ -1,37 +1,49 @@
 package gla.es3.com.profiletasks.model.parameter.types;
 
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by ito on 15/03/2015.
- */
+
 public class DaysOfWeekList implements ListSelection {
 
-    private List<Integer> selectedIndexList;
+    private Set<Integer> selectedIndexList;
     private String[] list;
 
     public DaysOfWeekList() {
-        selectedIndexList = new ArrayList<>();
+        selectedIndexList = new HashSet<>();
 
         list = new DateFormatSymbols().getShortWeekdays();
     }
 
     @Override
     public String[] getDisplayNames() {
-        return new String[0];
+        return list;
     }
 
     @Override
-    public List<Integer> getSelectedIndex() {
+    public Set<Integer> getSelectedIndexes() {
         return selectedIndexList;
     }
 
     @Override
-    public void setSelectedIndexes(List<Integer> selectedIndexes) {
+    public void setSelectedIndexes(Set<Integer> selectedIndexes) {
         this.selectedIndexList = selectedIndexes;
+    }
 
+    @Override
+    public String getDisplayName(int i) {
+        return list[i];
+    }
+
+    @Override
+    public void addSelectedIndex(Set<Integer> selectedIndexes) {
+        selectedIndexes.addAll(selectedIndexes);
+    }
+
+    @Override
+    public void addSelectedIndex(Integer selectedIndex) {
+        this.selectedIndexList.add(selectedIndex);
     }
 
     @Override

@@ -1,22 +1,23 @@
 package gla.es3.com.profiletasks.model.entity.triggers;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 import gla.es3.com.profiletasks.model.entity.EntityServiceHandler;
+import gla.es3.com.profiletasks.model.entity.triggers.functions.TriggerDateTime;
 import gla.es3.com.profiletasks.model.entity.triggers.functions.TriggerWifiName;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class TriggerProvider {
 
-    private HashMap<String, Trigger> triggerMap = null;
+    private LinkedHashMap<String, Trigger> triggerMap = null;
     private TriggerListener listener;
     private EntityServiceHandler eHandler;
 
     public TriggerProvider(TriggerListener listener, EntityServiceHandler eHandler) {
-        triggerMap = new HashMap<>();
+        triggerMap = new LinkedHashMap<>();
         this.listener = listener;
         this.eHandler = eHandler;
         initializeTriggers();
@@ -24,6 +25,7 @@ public class TriggerProvider {
 
     private void initializeTriggers() {
         registerTrigger(new TriggerWifiName(listener, eHandler));
+        registerTrigger(new TriggerDateTime(listener, eHandler));
     }
 
     public void registerTrigger(Trigger t) {
@@ -36,6 +38,10 @@ public class TriggerProvider {
 
     public Trigger getTrigger(String id) {
         return triggerMap.get(id);
+    }
+
+    public List<String> getTriggerListByOrder() {
+        return new ArrayList<>(triggerMap.keySet());
     }
 
 }

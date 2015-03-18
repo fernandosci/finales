@@ -1,8 +1,6 @@
 package gla.es3.com.profiletasks.model.parameter;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class ParameterImpl implements Parameter {
 
     private Class<?> valueClass;
@@ -10,13 +8,15 @@ public class ParameterImpl implements Parameter {
     private Object value;
     private Object defaultValue;
     private String text;
+    private String title;
 
-    public ParameterImpl(Class<?> valueClass, boolean used, Object value, Object defaultValue, String text) {
+    public ParameterImpl(Class<?> valueClass, boolean used, Object value, Object defaultValue, String title, String text) {
         this.valueClass = valueClass;
         this.used = used;
         this.value = value;
         this.defaultValue = defaultValue;
         this.text = text;
+        this.title = title;
     }
 
     public ParameterImpl(ParameterImpl other) {
@@ -25,6 +25,7 @@ public class ParameterImpl implements Parameter {
         this.defaultValue = other.defaultValue;
         this.text = other.text;
         this.used = other.used;
+        this.title = other.title;
     }
 
     @Override
@@ -88,5 +89,15 @@ public class ParameterImpl implements Parameter {
     @Override
     public boolean hasDefaultValue() {
         return defaultValue != null;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

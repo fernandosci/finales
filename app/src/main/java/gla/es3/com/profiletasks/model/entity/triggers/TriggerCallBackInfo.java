@@ -3,9 +3,7 @@ package gla.es3.com.profiletasks.model.entity.triggers;
 import gla.es3.com.profiletasks.model.entity.EntityServiceHandler;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 
-/**
- * Created by ito on 15/03/2015.
- */
+
 public class TriggerCallBackInfo {
 
     private EntityServiceHandler eHandler;

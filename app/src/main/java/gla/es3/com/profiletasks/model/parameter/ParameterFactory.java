@@ -2,9 +2,7 @@ package gla.es3.com.profiletasks.model.parameter;
 
 import java.util.List;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class ParameterFactory {
 
     ParameterContainer container;
@@ -15,13 +13,8 @@ public class ParameterFactory {
         list = container.getList();
     }
 
-    public ParameterFactory addParameter(Class<?> valueClass, Object value, Object defaultValue, String text) {
-        list.add(new ParameterImpl(valueClass, false, value, defaultValue, text));
-        return this;
-    }
-
-    public ParameterFactory addParameter(Class<?> valueClass, Object value, String text) {
-        list.add(new ParameterImpl(valueClass, false, value, value, text));
+    public ParameterFactory addParameter(Class<?> valueClass, Object value, String title, String text) {
+        list.add(new ParameterImpl(valueClass, false, value, value, text, title));
         return this;
     }
 
@@ -50,6 +43,14 @@ public class ParameterFactory {
     }
 
     public ParameterFactory setLastText(String text) {
+
+        if (list.size() > 0)
+            ((ParameterImpl) this.list.get(list.size() - 1)).setText(text);
+
+        return this;
+    }
+
+    public ParameterFactory setLastTitle(String text) {
 
         if (list.size() > 0)
             ((ParameterImpl) this.list.get(list.size() - 1)).setText(text);

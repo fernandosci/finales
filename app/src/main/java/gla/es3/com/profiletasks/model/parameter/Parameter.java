@@ -2,9 +2,7 @@ package gla.es3.com.profiletasks.model.parameter;
 
 import java.io.Serializable;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public interface Parameter extends Serializable {
 
     public Parameter copy();
@@ -26,4 +24,8 @@ public interface Parameter extends Serializable {
     public boolean isUsed();
 
     public void setUsed(boolean used);
+
+    public String getTitle();
+
+    public void setTitle(String title);
 }
