@@ -4,6 +4,7 @@ package gla.es3.com.profiletasks.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
@@ -69,6 +70,7 @@ public class ParameterActivity extends ActionBarActivity {
             } else if (parameter.getValueClass() == Boolean.class) {
 
                 CheckBox cbox = new CheckBox(getApplicationContext());
+                cbox.setTextColor(Color.BLACK);
                 cbox.setText(parameter.getText());
                 cbox.setGravity(Gravity.RIGHT);
                 cbox.setChecked(((Boolean) parameter.getValue()));

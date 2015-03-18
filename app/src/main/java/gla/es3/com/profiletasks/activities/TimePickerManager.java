@@ -12,9 +12,7 @@ import java.util.Calendar;
 
 import gla.es3.com.profiletasks.model.parameter.types.Hours;
 
-/**
- * Created by ito on 18/03/2015.
- */
+
 public class TimePickerManager implements View.OnClickListener {
 
 

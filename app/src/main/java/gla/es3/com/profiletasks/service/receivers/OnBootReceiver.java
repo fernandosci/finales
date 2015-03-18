@@ -8,9 +8,7 @@ import android.content.pm.PackageManager;
 
 import gla.es3.com.profiletasks.service.impl.MainService;
 
-/**
- * Created by ito on 14/03/2015.
- */
+
 public class OnBootReceiver extends BroadcastReceiver {
 //requires manifest receiver
 //requires manifest boot permission

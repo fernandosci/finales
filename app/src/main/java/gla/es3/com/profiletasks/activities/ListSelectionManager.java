@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import gla.es3.com.profiletasks.R;
 import gla.es3.com.profiletasks.model.parameter.types.InfoRowdata;
 
-/**
- * Created by ito on 17/03/2015.
- */
 public class ListSelectionManager {
 
     Context context;

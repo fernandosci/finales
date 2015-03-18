@@ -12,7 +12,7 @@ public class TaskBluetooth implements Task {
 
     @Override
     public String getID() {
-        return "TASK_DEVICE_WIFI";
+        return "TASK_DEVICE_BLUETOOTH";
     }
 
     @Override

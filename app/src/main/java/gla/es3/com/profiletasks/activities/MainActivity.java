@@ -140,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
         ProfileDescriptor profileDescriptor = model.getList().get(position);
 
         model.removeProfile(profileDescriptor);
+        itemsAdapter.removeItem(position);
 
     }
 
