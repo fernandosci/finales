@@ -10,8 +10,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,12 +23,14 @@ import java.util.List;
 import gla.es3.com.profiletasks.R;
 import gla.es3.com.profiletasks.model.parameter.Parameter;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
+import gla.es3.com.profiletasks.model.parameter.types.Hours;
+import gla.es3.com.profiletasks.model.parameter.types.ListSelection;
 import gla.es3.com.profiletasks.model.parameter.types.RangeIntType;
 
 public class ParameterActivity extends ActionBarActivity {
 
     private ParameterContainer parameters;
-    private List<View> parameterViewsList;
+    private List<Object> parameterViewsList;
     private int which;
 
 
@@ -86,9 +90,24 @@ public class ParameterActivity extends ActionBarActivity {
 
                 paramViewGroup.addView(listSelectionView);
 
-            } else if (parameter.getValueClass() == String.class) {
+            } else if (parameter.getValueClass() == Hours.class) {
+                Hours hoursValue = (Hours) parameter.getValue();
+                View hourView = vi.inflate(R.layout.view_parameter_time, null);
+                Button btnView = (Button) hourView.findViewById(R.id.parameter_hour_btnselect);
+                EditText editText = (EditText) hourView.findViewById(R.id.parameter_hour_edittext);
+                TimePickerManager mngr = new TimePickerManager(ParameterActivity.this, btnView, editText, hoursValue);
+                parameterViewsList.add(mngr);
 
-            } else if (parameter.getValueClass() == String.class) {
+                paramViewGroup.addView(hourView);
+
+            } else if (parameter.getValueClass() == ListSelection.class) {
+                ListSelection listSelection = (ListSelection) parameter.getValue();
+                View viewSelection = vi.inflate(R.layout.view_parameter_listselection, null);
+                ListView listView = (ListView) viewSelection.findViewById(R.id.parameter_listselection);
+                ListSelectionManager mngr = new ListSelectionManager(getApplicationContext(), listView, listSelection.getDisplayNames(), listSelection.getInfoRowData());
+                parameterViewsList.add(mngr);
+
+                paramViewGroup.addView(viewSelection);
 
             } else if (parameter.getValueClass() == String.class) {
 
@@ -113,21 +132,32 @@ public class ParameterActivity extends ActionBarActivity {
         List<Parameter> list = parameters.getList();
         for (int c = 0; c < list.size(); c++) {
             Parameter parameter = list.get(c);
-            View view = parameterViewsList.get(c);
 
             if (parameter.getValueClass() == String.class) {
-
+                View view = (View) parameterViewsList.get(c);
                 parameter.setValue(((EditText) view).getText().toString());
 
             } else if (parameter.getValueClass() == Boolean.class) {
-
+                View view = (View) parameterViewsList.get(c);
                 parameter.setValue(((CheckBox) view).isChecked());
 
             } else if (parameter.getValueClass() == RangeIntType.class) {
-
+                View view = (View) parameterViewsList.get(c);
                 RangeIntType rangeValue = (RangeIntType) parameter.getValue();
                 rangeValue.setValue(((SeekBar) view).getProgress() + rangeValue.getMin());
                 parameter.setValue(rangeValue);
+            } else if (parameter.getValueClass() == Hours.class) {
+
+                TimePickerManager mngr = (TimePickerManager) parameterViewsList.get(c);
+                parameter.setValue(mngr.getHours());
+
+            } else if (parameter.getValueClass() == ListSelection.class) {
+                ListSelectionManager mngr = (ListSelectionManager) parameterViewsList.get(c);
+                ListSelection listSelection = (ListSelection) parameter.getValue();
+
+                listSelection.setSelected(mngr.getInfodata());
+
+                parameter.setValue(listSelection);
             }
         }
 

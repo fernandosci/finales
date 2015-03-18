@@ -26,6 +26,7 @@ import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 import gla.es3.com.profiletasks.model.parameter.types.DaysOfWeekList;
 import gla.es3.com.profiletasks.model.parameter.types.Hours;
+import gla.es3.com.profiletasks.model.parameter.types.ListSelection;
 
 
 public class TriggerDateTime extends BaseTrigger {
@@ -71,7 +72,7 @@ public class TriggerDateTime extends BaseTrigger {
     public ParameterContainer getParameters() {
 
         ParameterFactory f = new ParameterFactory(getID());
-        f.addParameter(DaysOfWeekList.class, new DaysOfWeekList(), "Day of Week", "Day of Week")
+        f.addParameter(ListSelection.class, new DaysOfWeekList(), "Day of Week", "Day of Week")
                 .addParameter(Hours.class, new Hours(Calendar.getInstance().getTime()), "Time", "Time");
         return f.getContainer();
     }

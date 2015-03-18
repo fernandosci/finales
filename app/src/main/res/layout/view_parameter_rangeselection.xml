@@ -10,20 +10,25 @@
         android:id="@+id/parameter_range_min"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text" />
+        android:layout_gravity="left|center"
+        android:text="New Text"
+        android:textSize="20dp" />
 
     <SeekBar
         android:id="@+id/parameter_range_value"
-        android:layout_width="115dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0.33"
-        android:indeterminate="false" />
+        android:layout_weight="0.48"
+        android:indeterminate="false"
+        android:longClickable="false" />
 
     <TextView
         android:id="@+id/parameter_range_max"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text" />
+        android:layout_gravity="center_vertical|right"
+        android:text="New Text"
+        android:textSize="20dp" />
 
 </LinearLayout>

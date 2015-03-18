@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import gla.es3.com.profiletasks.R;
-import gla.es3.com.profiletasks.utils.InfoRowdata;
+import gla.es3.com.profiletasks.model.parameter.types.InfoRowdata;
 
 /**
  * Created by ito on 17/03/2015.
@@ -26,20 +26,23 @@ public class ListSelectionManager {
 
     private ArrayList<InfoRowdata> infodata;
 
-    public ListSelectionManager(Context context, ListView llChb, String[] data) {
+    public ListSelectionManager(Context context, ListView llChb, String[] data, ArrayList<InfoRowdata> infodata) {
         this.context = context;
         this.llChb = llChb;
         this.data = data;
 
-        infodata = new ArrayList<InfoRowdata>();
-        for (int i = 0; i < data.length; i++) {
-            infodata.add(new InfoRowdata(false, i));
-            // System.out.println(i);
-            //System.out.println("Data is == "+data[i]);
-        }
+        this.infodata = infodata;
+        llChb.invalidate();
         llChb.setAdapter(new MyAdapter());
     }
 
+    public ArrayList<InfoRowdata> getInfodata() {
+        return infodata;
+    }
+
+    public void setInfodata(ArrayList<InfoRowdata> infodata) {
+        this.infodata = infodata;
+    }
 
     public class MyAdapter extends BaseAdapter {
 

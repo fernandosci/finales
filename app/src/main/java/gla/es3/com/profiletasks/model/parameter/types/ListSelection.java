@@ -1,6 +1,7 @@
 package gla.es3.com.profiletasks.model.parameter.types;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -21,4 +22,8 @@ public interface ListSelection extends Serializable {
     public void setNoSelection();
 
     public boolean isMultipleSelectionAllowed();
+
+    public ArrayList<InfoRowdata> getInfoRowData();
+
+    public void setSelected(ArrayList<InfoRowdata> infoRowdatas);
 }
