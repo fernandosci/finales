@@ -64,7 +64,7 @@ public class TaskActivity extends ActionBarActivity {
     private void configure() {
         btnAdd = (Button) findViewById(R.id.btnAdd);
         viewMain = (ListView) findViewById(R.id.viewModel);
-        btnDebug = (Button) findViewById(R.id.btnDebug);
+//        btnDebug = (Button) findViewById(R.id.btnDebug);
 
         btnAdd.setText("New Task");
     }
@@ -80,13 +80,13 @@ public class TaskActivity extends ActionBarActivity {
             }
         });
 
-        btnDebug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (model != null)
-                    onDebugClick(v);
-            }
-        });
+//        btnDebug.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (model != null)
+//                    onDebugClick(v);
+//            }
+//        });
 
         profile = model.getProfile(profileID);
 

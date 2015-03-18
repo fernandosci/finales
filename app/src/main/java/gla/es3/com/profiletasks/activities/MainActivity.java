@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
 
         btnAdd = (Button) findViewById(R.id.btnAdd);
         viewMain = (ListView) findViewById(R.id.viewModel);
-        btnDebug = (Button) findViewById(R.id.btnDebug);
+//        btnDebug = (Button) findViewById(R.id.btnDebug);
 
         btnAdd.setText("New profile");
     }
@@ -81,13 +81,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        btnDebug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (model != null)
-                    onDebugClick(v);
-            }
-        });
+//        btnDebug.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (model != null)
+//                    onDebugClick(v);
+//            }
+//        });
 
         model = serviceHandler.getModel();
 
@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
 
         //DEBUG
 
-        newProfile("DEBUGPROFILE");
+        //newProfile("DEBUGPROFILE");
     }
 
 
@@ -153,31 +153,6 @@ public class MainActivity extends ActionBarActivity {
 
         model.addProfile(profile);
         itemsAdapter.addItem(new CustomArrayItem(profile, model));
-
-//        TaskDescriptor taskd = new TaskDescriptor(("TASK_MESSAGE_TOAST"), model.getTaskServiceHandler());
-//
-//        ParameterContainer parameters = taskd.getParameters();
-//        parameters.getList().get(0).setValue("Hello World!");
-//
-//        profile.addTaskDescriptor(taskd);
-//
-//
-//        TriggerDescriptor trig = new TriggerDescriptor(profile.getID(),"TRIGGER_DATE_DATETIME", model.getTriggerServiceHandler());
-//        parameters = trig.getParameters();
-//        DaysOfWeekList dow = new DaysOfWeekList();
-//        dow.addSelectedIndex(0);
-//        dow.addSelectedIndex(1);
-//        dow.addSelectedIndex(2);
-//
-//        Calendar instance = Calendar.getInstance();
-//        instance.setTimeInMillis(System.currentTimeMillis());
-//        instance.add(Calendar.MINUTE,1);
-//
-//        parameters.getList().get(0).setValue(dow);
-//        parameters.getList().get(1).setValue(new Hours(instance.getTime()));
-//
-//        profile.addTriggerDescriptor(trig, model.getTriggerServiceHandler());
-
 
     }
 

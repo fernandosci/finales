@@ -57,6 +57,14 @@ public class ProfileDescriptor implements Entity, Serializable {
         }
     }
 
+    public void updated(TriggerDescriptor id, TriggerServiceHandler sHandler) {
+        synchronized (triggerDescriptors) {
+            if (enabled) {
+                id.register(sHandler);
+            }
+        }
+    }
+
     public void addTriggerDescriptor(TriggerDescriptor id, TriggerServiceHandler sHandler) {
         synchronized (triggerDescriptors) {
             triggerDescriptors.add(id);

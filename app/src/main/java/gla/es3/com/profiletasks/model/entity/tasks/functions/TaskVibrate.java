@@ -1,30 +1,31 @@
 package gla.es3.com.profiletasks.model.entity.tasks.functions;
 
-import android.widget.Toast;
+import android.os.Vibrator;
 
 import gla.es3.com.profiletasks.model.entity.tasks.Task;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
 import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
+import gla.es3.com.profiletasks.model.parameter.types.RangeIntType;
 
 
-public class TaskToast implements Task {
+public class TaskVibrate implements Task {
 
     @Override
     public String getID() {
-        return "TASK_MESSAGE_TOAST";
+        return "TASK_VIBRATE";
     }
 
     @Override
     public String getDisplayName() {
-        return "Toast";
+        return "Vibrate";
     }
 
     @Override
     public ParameterContainer getParameters() {
         ParameterFactory f = new ParameterFactory(getID());
-        f.addParameter(String.class, "Hello World!", "Toast", "Toast Message");
-
+        f.addParameter(Boolean.class, new Boolean(true), "Vibrate", "Vibrate").
+                addParameter(RangeIntType.class, new RangeIntType(0, 1000, 500), "Vibrate duration(ms)", "Vibrate duration(ms)");
         return f.getContainer();
     }
 
@@ -35,13 +36,21 @@ public class TaskToast implements Task {
 
     @Override
     public void run(TaskServiceHandler tHandler, ParameterContainer list) {
-        if (list.getId().equals(getID())) {
+        if (list.getId() == getID()) {
 
             if (list.getList().get(0).hasValue()) {
 
-                String value = (String) list.getList().get(0).getValue();
-                Toast.makeText(tHandler.getContext(), value, Toast.LENGTH_SHORT).show();
+                Boolean value = (Boolean) list.getList().get(0).getValue();
+
+                if (value && list.getList().get(1).hasValue()) {
+
+                    RangeIntType range = (RangeIntType) list.getList().get(1).getValue();
+
+                    Vibrator vib = (Vibrator) tHandler.getContext().getSystemService(tHandler.getContext().VIBRATOR_SERVICE);
+                    vib.vibrate(range.getValue());
+                }
             }
         }
     }
+
 }

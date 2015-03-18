@@ -1,6 +1,6 @@
 package gla.es3.com.profiletasks.model.entity.tasks.functions;
 
-import android.widget.Toast;
+import android.net.wifi.WifiManager;
 
 import gla.es3.com.profiletasks.model.entity.tasks.Task;
 import gla.es3.com.profiletasks.model.entity.tasks.TaskServiceHandler;
@@ -8,23 +8,22 @@ import gla.es3.com.profiletasks.model.parameter.ParameterContainer;
 import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
 
-public class TaskToast implements Task {
+public class TaskWifi implements Task {
 
     @Override
     public String getID() {
-        return "TASK_MESSAGE_TOAST";
+        return "TASK_DEVICE_WIFI";
     }
 
     @Override
     public String getDisplayName() {
-        return "Toast";
+        return "Turn Wifi on/off";
     }
 
     @Override
     public ParameterContainer getParameters() {
         ParameterFactory f = new ParameterFactory(getID());
-        f.addParameter(String.class, "Hello World!", "Toast", "Toast Message");
-
+        f.addParameter(Boolean.class, new Boolean(true), "Wifi on/off", "Wifi on/off");
         return f.getContainer();
     }
 
@@ -35,13 +34,16 @@ public class TaskToast implements Task {
 
     @Override
     public void run(TaskServiceHandler tHandler, ParameterContainer list) {
-        if (list.getId().equals(getID())) {
+        if (list.getId() == getID()) {
 
             if (list.getList().get(0).hasValue()) {
 
-                String value = (String) list.getList().get(0).getValue();
-                Toast.makeText(tHandler.getContext(), value, Toast.LENGTH_SHORT).show();
+                Boolean value = (Boolean) list.getList().get(0).getValue();
+
+                WifiManager wifiManager = (WifiManager) tHandler.getContext().getSystemService(tHandler.getContext().WIFI_SERVICE);
+                wifiManager.setWifiEnabled(value);
             }
         }
     }
+
 }

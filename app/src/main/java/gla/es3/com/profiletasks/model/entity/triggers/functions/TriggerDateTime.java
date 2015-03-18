@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.PowerManager;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,7 +64,7 @@ public class TriggerDateTime extends BaseTrigger {
 
     @Override
     public String getDisplayName() {
-        return "/Day of Week";
+        return "TIme/Day of Week";
     }
 
     @Override
@@ -92,6 +91,12 @@ public class TriggerDateTime extends BaseTrigger {
     }
 
     @Override
+    public void unregister(String profileId) {
+        super.unregister(profileId);
+        setNextToCall();
+    }
+
+    @Override
     public void updatedParameters(ParameterContainer list, String profileId) {
         super.register(list, profileId);
 
@@ -107,20 +112,19 @@ public class TriggerDateTime extends BaseTrigger {
     private void setNextToCall() {
         String nextProfile = findNext();
 
+        Intent serviceIntent = new Intent(CUSTOM_ACTION_DATETIMEALARM);
+        serviceIntent.putExtra("profileId", nextProfile);
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(tHandler.getContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (alarmIntent == null)
+            alarmIntent = PendingIntent.getBroadcast(tHandler.getContext(), 0, serviceIntent, 0);
+
+        if (alarmMgr != null && alarmIntent != null) {
+            alarmMgr.cancel(alarmIntent);
+        }
+
 
         if (!nextProfile.isEmpty()) {
-
-            Intent serviceIntent = new Intent(CUSTOM_ACTION_DATETIMEALARM);
-            serviceIntent.putExtra("profileId", nextProfile);
-
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(tHandler.getContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            if (alarmIntent == null)
-                alarmIntent = PendingIntent.getBroadcast(tHandler.getContext(), 0, serviceIntent, 0);
-
-            if (alarmMgr != null && alarmIntent != null) {
-                alarmMgr.cancel(alarmIntent);
-            }
-
 
             //get hour parameter
             TriggerCallBackInfo callBackFromProfileID = getCallBackFromProfileID(nextProfile);
@@ -141,7 +145,7 @@ public class TriggerDateTime extends BaseTrigger {
 
             String tmp = calendar.getTime().toString();
 
-            Toast.makeText(tHandler.getContext(), "CONFIGURING ALARM FOR TRIGGER !!!!!!!!!!", Toast.LENGTH_SHORT).show(); // For example
+            //Toast.makeText(tHandler.getContext(), "CONFIGURING ALARM FOR TRIGGER !!!!!!!!!!", Toast.LENGTH_SHORT).show(); // For example
 
 
             alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
@@ -230,7 +234,7 @@ public class TriggerDateTime extends BaseTrigger {
                 PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
                 PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
                 wl.acquire();
-                Toast.makeText(context, "HouRTIMEALARM !!!!!!!!!!", Toast.LENGTH_SHORT).show(); // For example
+                //Toast.makeText(context, "HouRTIMEALARM !!!!!!!!!!", Toast.LENGTH_SHORT).show(); // For example
 
                 String profileId = intent.getStringExtra("profileId");
                 listener.notificationOfEvent(profileId);

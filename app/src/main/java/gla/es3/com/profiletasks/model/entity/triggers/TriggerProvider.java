@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import gla.es3.com.profiletasks.model.entity.EntityServiceHandler;
+import gla.es3.com.profiletasks.model.entity.triggers.functions.TriggerCharging;
 import gla.es3.com.profiletasks.model.entity.triggers.functions.TriggerDateTime;
 import gla.es3.com.profiletasks.model.entity.triggers.functions.TriggerWifiName;
 
@@ -26,6 +27,7 @@ public class TriggerProvider {
     private void initializeTriggers() {
         registerTrigger(new TriggerWifiName(listener, eHandler));
         registerTrigger(new TriggerDateTime(listener, eHandler));
+        registerTrigger(new TriggerCharging(listener, eHandler));
     }
 
     public void registerTrigger(Trigger t) {
