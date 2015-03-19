@@ -34,7 +34,7 @@ public class TaskWifi implements Task {
 
     @Override
     public void run(TaskServiceHandler tHandler, ParameterContainer list) {
-        if (list.getId() == getID()) {
+        if (list.getId().equals(getID())) {
 
             if (list.getList().get(0).hasValue()) {
 

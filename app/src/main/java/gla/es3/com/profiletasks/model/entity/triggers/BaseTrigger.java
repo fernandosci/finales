@@ -52,4 +52,10 @@ public abstract class BaseTrigger implements Trigger {
         }
     }
 
+    @Override
+    public void updatedParameters(ParameterContainer list, String profileId) {
+        synchronized (callbacks) {
+            callbacks.put(profileId, new TriggerCallBackInfo(tHandler, list, profileId));
+        }
+    }
 }

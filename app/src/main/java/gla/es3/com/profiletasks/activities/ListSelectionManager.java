@@ -77,11 +77,17 @@ public class ListSelectionManager {
                         infodata.get(position).isclicked = false;
                     } else {
                         infodata.get(position).isclicked = true;
-                    }
 
-                    for (int i = 0; i < infodata.size(); i++) {
-                        if (infodata.get(i).isclicked) {
-                            System.out.println("Selectes Are == " + data[i]);
+                        boolean invalidate = false;
+                        if (!infodata.get(position).single) {
+                            for (int i = 0; i < infodata.size(); i++) {
+                                if (i != position && infodata.get(i).isclicked) {
+                                    infodata.get(i).isclicked = false;
+                                    invalidate = true;
+                                }
+                            }
+                            if (invalidate)
+                                MyAdapter.this.notifyDataSetChanged();
                         }
                     }
                 }

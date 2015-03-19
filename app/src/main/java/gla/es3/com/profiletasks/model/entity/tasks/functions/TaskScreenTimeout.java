@@ -38,7 +38,7 @@ public class TaskScreenTimeout implements Task {
 
     @Override
     public void run(TaskServiceHandler tHandler, ParameterContainer list) {
-        if (list.getId() == getID()) {
+        if (list.getId().equals(getID())) {
 
             if (list.getList().get(0).hasValue()) {
 
@@ -68,9 +68,12 @@ public class TaskScreenTimeout implements Task {
                     time = 120000;
                     break;
                 case 4:
-                    time = 600000;
+                    time = 300000;
                     break;
                 case 5:
+                    time = 600000;
+                    break;
+                case 6:
                     time = 1800000;
                     break;
                 default:

@@ -98,7 +98,7 @@ public class TriggerDateTime extends BaseTrigger {
 
     @Override
     public void updatedParameters(ParameterContainer list, String profileId) {
-        super.register(list, profileId);
+        super.updatedParameters(list, profileId);
 
         setNextToCall();
     }

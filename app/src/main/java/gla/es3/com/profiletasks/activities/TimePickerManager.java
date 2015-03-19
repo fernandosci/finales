@@ -52,7 +52,7 @@ public class TimePickerManager implements View.OnClickListener {
                                           int minute) {
                         // Display Selected time in textbox
                         Calendar calendar = hours.getCalendar();
-                        calendar.set(Calendar.HOUR, hourOfDay);
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
                         txtTime.setText(new SimpleDateFormat("HH:mm").format(calendar.getTime()));
                         hours.setCalendar(calendar);

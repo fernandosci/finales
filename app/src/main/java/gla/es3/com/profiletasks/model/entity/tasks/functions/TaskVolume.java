@@ -39,7 +39,7 @@ public class TaskVolume implements Task {
 
     @Override
     public void run(TaskServiceHandler tHandler, ParameterContainer list) {
-        if (list.getId() == getID()) {
+        if (list.getId().equals(getID())) {
 
             int n;
             AudioManager mgr = null;
@@ -55,22 +55,22 @@ public class TaskVolume implements Task {
             n = 1;
             if (list.getList().get(n).hasValue()) {
                 RangeIntType range = (RangeIntType) list.getList().get(n).getValue();
-                mgr.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                mgr.setStreamVolume(AudioManager.STREAM_NOTIFICATION, range.getValue(), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
             }
             n = 2;
             if (list.getList().get(n).hasValue()) {
                 RangeIntType range = (RangeIntType) list.getList().get(n).getValue();
-                mgr.setStreamVolume(AudioManager.STREAM_ALARM, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                mgr.setStreamVolume(AudioManager.STREAM_ALARM, range.getValue(), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
             }
             n = 3;
             if (list.getList().get(n).hasValue()) {
                 RangeIntType range = (RangeIntType) list.getList().get(n).getValue();
-                mgr.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                mgr.setStreamVolume(AudioManager.STREAM_MUSIC, range.getValue(), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
             }
             n = 4;
             if (list.getList().get(n).hasValue()) {
                 RangeIntType range = (RangeIntType) list.getList().get(n).getValue();
-                mgr.setStreamVolume(AudioManager.STREAM_SYSTEM, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                mgr.setStreamVolume(AudioManager.STREAM_SYSTEM, range.getValue(), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
             }
         }
     }
