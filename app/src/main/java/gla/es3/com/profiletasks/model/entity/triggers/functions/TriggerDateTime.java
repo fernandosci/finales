@@ -238,7 +238,7 @@ public class TriggerDateTime extends BaseTrigger {
 
                 String profileId = intent.getStringExtra("profileId");
                 listener.notificationOfEvent(profileId);
-
+                setNextToCall();
 
                 wl.release();
 
