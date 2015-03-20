@@ -205,6 +205,7 @@ public class TriggerDateTime extends BaseTrigger {
             tmpCalendar.setTime(hours.getDate());
 
             if (tmpCalendar.get(Calendar.HOUR_OF_DAY) >= calendar.get(Calendar.HOUR_OF_DAY) &&
+                    tmpCalendar.get(Calendar.MINUTE) > calendar.get(calendar.MINUTE) &&
                     tmpCalendar.get(Calendar.HOUR_OF_DAY) - calendar.get(Calendar.HOUR_OF_DAY) <= differenceHour) {
                 if (tmpCalendar.get(Calendar.MINUTE) > calendar.get(Calendar.MINUTE) &&
                         tmpCalendar.get(Calendar.MINUTE) - calendar.get(Calendar.MINUTE) < differenceMinute) {

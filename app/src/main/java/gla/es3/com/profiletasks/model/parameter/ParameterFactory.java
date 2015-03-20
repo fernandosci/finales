@@ -58,6 +58,13 @@ public class ParameterFactory {
         return this;
     }
 
+    public ParameterFactory setLastUsed(boolean used) {
+
+        if (list.size() > 0)
+            ((ParameterImpl) this.list.get(list.size() - 1)).setUsed(used);
+
+        return this;
+    }
 
     public ParameterContainer getContainer() {
         return container;

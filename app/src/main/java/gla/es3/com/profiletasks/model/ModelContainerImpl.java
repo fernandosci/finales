@@ -74,6 +74,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
         }
     }
 
+    @Override
     public void save() {
         FileOutputStream fos = null;
         try {
@@ -127,6 +128,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
         synchronized (profiles) {
             profiles.add(pf);
         }
+        this.save();
     }
 
     @Override
@@ -134,6 +136,7 @@ public class ModelContainerImpl implements ModelContainer, Serializable {
         synchronized (profiles) {
             profiles.remove(pf);
         }
+        this.save();
     }
 
     @Override

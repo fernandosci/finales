@@ -138,10 +138,13 @@ public class ParameterActivity extends ActionBarActivity {
             if (parameter.getValueClass() == String.class) {
                 View view = (View) parameterViewsList.get(c);
                 parameter.setValue(((EditText) view).getText().toString());
+                parameter.setUsed(false);
 
             } else if (parameter.getValueClass() == Boolean.class) {
                 View view = (View) parameterViewsList.get(c);
                 parameter.setValue(((CheckBox) view).isChecked());
+
+                parameter.setUsed(!((CheckBox) view).isChecked());
 
             } else if (parameter.getValueClass() == RangeIntType.class) {
                 View view = (View) parameterViewsList.get(c);

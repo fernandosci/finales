@@ -20,4 +20,6 @@ public interface ModelContainer {
     public TriggerServiceHandler getTriggerServiceHandler();
 
     public TaskServiceHandler getTaskServiceHandler();
+
+    public void save();
 }

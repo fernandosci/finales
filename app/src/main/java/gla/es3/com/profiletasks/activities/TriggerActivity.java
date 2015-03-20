@@ -187,6 +187,7 @@ public class TriggerActivity extends ActionBarActivity {
 
             profile.updated(triggerDescriptor, model.getTriggerServiceHandler());
         }
+        model.save();
     }
 
     @Override

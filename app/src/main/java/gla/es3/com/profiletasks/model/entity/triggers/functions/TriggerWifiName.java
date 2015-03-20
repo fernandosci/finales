@@ -23,6 +23,8 @@ import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
 public class TriggerWifiName extends BaseTrigger {
 
+    private static boolean firsttime = true;
+
     private LocalTriggerWifi localTriggerWifi;
 
     public TriggerWifiName(TriggerListener listener, EntityServiceHandler eHandler) {
@@ -78,6 +80,11 @@ public class TriggerWifiName extends BaseTrigger {
             if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
                 NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
+                if (firsttime) {
+                    firsttime = false;
+                    return;
+                }
+
                 if (info.isConnected()) {
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -95,12 +102,28 @@ public class TriggerWifiName extends BaseTrigger {
                             String name = "\"" + (String) parameter.getValue() + "\"";
 
                             if (name.equals(ssid)) {
-                                PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-                                wl.acquire();
-                                listener.notificationOfEvent(profile);
-                                wl.release();
-                            }
+
+                                if (!parameter.isUsed()) {
+                                    PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+                                    wl.acquire();
+                                    parameter.setUsed(true);
+                                    listener.notificationOfEvent(profile);
+                                    wl.release();
+                                }
+                            } else
+                                parameter.setUsed(false);
+                        }
+                    }
+                } else {
+                    Set<String> profiles = getProfiles();
+
+                    for (String profile : profiles) {
+                        TriggerCallBackInfo callBackFromProfileID = getCallBackFromProfileID(profile);
+                        List<Parameter> list = callBackFromProfileID.getList().getList();
+                        Parameter parameter = list.get(0);
+                        if (parameter.hasValue()) {
+                            parameter.setUsed(false);
                         }
                     }
                 }

@@ -21,10 +21,16 @@ import gla.es3.com.profiletasks.model.parameter.ParameterFactory;
 
 public class TriggerCharging extends BaseTrigger {
 
+    public static boolean _statusIsPlugged = false;
+
     private LocalTriggerCharging triggerHandler;
 
     public TriggerCharging(TriggerListener listener, EntityServiceHandler eHandler) {
         super(listener, eHandler);
+
+        Intent intent = tHandler.getContext().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        _statusIsPlugged = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB;
 
         triggerHandler = new LocalTriggerCharging();
         IntentFilter serviceIntentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
@@ -69,23 +75,47 @@ public class TriggerCharging extends BaseTrigger {
             String action = intent.getAction();
             Set<String> profiles = getProfiles();
 
-            for (String profile : profiles) {
+            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
 
-                TriggerCallBackInfo callBackFromProfileID = getCallBackFromProfileID(profile);
-                List<Parameter> list = callBackFromProfileID.getList().getList();
-                Parameter parameter = list.get(0);
+                int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
 
-                if (parameter.hasValue()) {
-                    Boolean state = (Boolean) parameter.getValue();
 
-                    int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
+                if ((plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB) && _statusIsPlugged) {
+                    return;
+                } else if ((plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB) && !_statusIsPlugged) {
+                    _statusIsPlugged = true;
+                } else if (plugged == 0 && !_statusIsPlugged) {
+                    return;
+                } else if (plugged == 0 && _statusIsPlugged) {
+                    _statusIsPlugged = false;
+                }
 
-                    if ((plugged == 0 && state) || (plugged != 0 && !state)) {
-                        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
-                        wl.acquire();
-                        listener.notificationOfEvent(profile);
-                        wl.release();
+
+                for (String profile : profiles) {
+                    TriggerCallBackInfo callBackFromProfileID = getCallBackFromProfileID(profile);
+                    List<Parameter> list = callBackFromProfileID.getList().getList();
+                    Parameter parameter = list.get(0);
+
+                    if (parameter.hasValue()) {
+                        Boolean state = (Boolean) parameter.getValue();
+
+                        if ((plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB) && state) {
+                            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+                            wl.acquire();
+                            parameter.setUsed(parameter.isUsed());
+                            listener.notificationOfEvent(profile);
+                            wl.release();
+                        } else if (plugged == 0 && !state) {
+                            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
+                            wl.acquire();
+                            parameter.setUsed(!parameter.isUsed());
+                            listener.notificationOfEvent(profile);
+                            wl.release();
+                        } else {
+                            // intent didnt include extra info
+                        }
                     }
                 }
             }

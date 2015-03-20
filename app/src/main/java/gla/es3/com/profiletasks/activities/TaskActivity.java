@@ -185,6 +185,8 @@ public class TaskActivity extends ActionBarActivity {
 
             taskDescriptor.setParameterContainer(parameters);
         }
+
+        model.save();
     }
 
     @Override
